@@ -1,2 +1,2 @@
 # P-2-Calculadora-cientifica
-esta es una calculadora científica use el lenguaje de JAVASCRIPT junto HTML y CSS 
+Mi mayor reto en este proyecto fue codear la parte para que hiciera las raizes u operaciones muy complejas 
