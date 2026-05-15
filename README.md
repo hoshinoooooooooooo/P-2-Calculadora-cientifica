@@ -1,2 +1,2 @@
 # P-2-Calculadora-cientifica
-Mi mayor reto en este proyecto fue codear la parte para que hiciera las raizes u operaciones muy complejas 
+Esta es una calculado cientifica la hice con el lenguaje de JAVASCRIPT con HTML y CSS lo que mas me costo de este proyecto fue las partes para que hiciera operaciones complejas como las raices
