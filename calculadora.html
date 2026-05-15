@@ -1,0 +1,163 @@
+<calculadoracientifica html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Científica Pro</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #221127;
+            --calc-bg: hsl(307, 26%, 7%);
+            --btn-bg: #f615f6;
+            --accent: #0a080a;
+            --text: #fdfcfd;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .calculadora {
+            background-color: var(--calc-bg);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(198, 108, 194, 0.903);
+            width: 340px;
+            display: block; /* Asegura que no se colapse */
+        }
+
+        #pantalla {
+            width: 100%;
+            height: 70px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--btn-bg);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: right;
+            padding: 15px;
+            font-size: 24px;
+            color: var(--text);
+            box-sizing: border-box;
+        }
+
+        .grid-botones {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        button {
+            height: 55px;
+            border: none;
+            border-radius: 10px;
+            background-color: var(--btn-bg);
+            color: var(--text);
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button:hover {
+            background-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .cientifico { background-color: #562489; color: #f5f4f4; }
+        .operador { color: var(--accent); }
+        .igual { background-color: var(--accent); grid-column: span 2; }
+        .clear { background-color: #533483; }
+
+        span.material-icons { font-size: 20px; }
+    </style>
+</head>
+<body>
+
+    <div class="calculadora">
+        <input type="text" id="pantalla" readonly value="0">
+        
+        <div class="grid-botones">
+            <button class="cientifico" onclick="cientifica('Math.sin')">sin</button>
+            <button class="cientifico" onclick="cientifica('Math.cos')">cos</button>
+            <button class="cientifico" onclick="cientifica('Math.sqrt')">√</button>
+            <button class="cientifico" onclick="agregar('**')">xʸ</button>
+
+            <button class="clear" onclick="limpiar()">C</button>
+            <button class="clear" onclick="borrar()"><span class="material-icons">backspace</span></button>
+            <button class="operador" onclick="agregar('%')">%</button>
+            <button class="operador" onclick="agregar('/')">/</button>
+
+            <button onclick="agregar('7')">7</button>
+            <button onclick="agregar('8')">8</button>
+            <button onclick="agregar('9')">9</button>
+            <button class="operador" onclick="agregar('*')">×</button>
+
+            <button onclick="agregar('4')">4</button>
+            <button onclick="agregar('5')">5</button>
+            <button onclick="agregar('6')">6</button>
+            <button class="operador" onclick="agregar('-')">-</button>
+
+            <button onclick="agregar('1')">1</button>
+            <button onclick="agregar('2')">2</button>
+            <button onclick="agregar('3')">3</button>
+            <button class="operador" onclick="agregar('+')">+</button>
+
+            <button onclick="agregar('0')">0</button>
+            <button onclick="agregar('.')">.</button>
+            <button class="igual" onclick="calcular()">=</button>
+        </div>
+    </div>
+
+    <script>
+        const pantalla = document.getElementById('pantalla');
+
+        function agregar(v) {
+            if(pantalla.value === '0' && v !== '.') pantalla.value = v;
+            else pantalla.value += v;
+        }
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+function sonarClic() {
+    const oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    oscillator.type = 'fine';
+    oscillator.frequency.setValueAtTime(540, audioCtx.currentTime);
+    gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+    oscillator.start();
+    oscillator.stop(audioCtx.currentTime + 0.08);
+
+        }
+
+        function limpiar() { pantalla.value = '0'; }
+
+        function borrar() {
+            pantalla.value = pantalla.value.slice(0, -1);
+            if(pantalla.value === '') pantalla.value = '0';
+        }
+
+        function cientifica(f) {
+            try {
+                let res = eval(`${f}(${eval(pantalla.value)})`);
+                pantalla.value = Number(res.toFixed(8));
+            } catch { pantalla.value = 'Error'; }
+        }
+
+        function calcular() {
+            try {
+                pantalla.value = eval(pantalla.value);
+            } catch { pantalla.value = 'Error'; }
+        }
+    </script>
+</body>
+</html>
